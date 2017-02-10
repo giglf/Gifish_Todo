@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Gifish-Todo</string>
+    <string name="no_to_dos">You don\'t have any todos</string>
 </resources>
