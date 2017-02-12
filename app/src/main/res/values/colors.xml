@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="amber">#FFC107</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryLight">#C5CAE9</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="secondary_text">#727272</color>
     <color name="icons">#FFFFFF</color>
+
+    <color name="grey600">#757575</color>
+    <color name="grey300">#E0E0E0</color>
 </resources>
