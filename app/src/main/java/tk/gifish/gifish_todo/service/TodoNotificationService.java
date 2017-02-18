@@ -1,12 +1,19 @@
 package tk.gifish.gifish_todo.service;
 
+import android.annotation.TargetApi;
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import java.util.UUID;
+
+import tk.gifish.gifish_todo.R;
+import tk.gifish.gifish_todo.activity.ReminderActivity;
 
 
 public class TodoNotificationService extends IntentService {
@@ -22,6 +29,7 @@ public class TodoNotificationService extends IntentService {
         super("TodoNotificationService");
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onHandleIntent(Intent intent) {
         mTodoText = intent.getStringExtra(TODOTEXT);
@@ -29,24 +37,19 @@ public class TodoNotificationService extends IntentService {
 
         Log.d("giglfGebugTag", "onHandleIntent called");
         NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        //Intent i = new Intent(this)
-    }
+        Intent i = new Intent(this, ReminderActivity.class);
+        i.putExtra(TodoNotificationService.TODOUUID, mTodoUUID);
+        Intent deleteIntent = new Intent(this, DeleteNotificationService.class);
 
-    /**
-     * Handle action Foo in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleActionFoo(String param1, String param2) {
-        // TODO: Handle action Foo
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+        Notification notification = new Notification.Builder(this)
+                .setContentTitle(mTodoText)
+                .setSmallIcon(R.drawable.ic_done_white_24dp)
+                .setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setDeleteIntent(PendingIntent.getService(this, mTodoUUID.hashCode(), deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+                .setContentIntent(PendingIntent.getActivity(this, mTodoUUID.hashCode(), i, PendingIntent.FLAG_UPDATE_CURRENT))
+                .build();
 
-    /**
-     * Handle action Baz in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleActionBaz(String param1, String param2) {
-        // TODO: Handle action Baz
-        throw new UnsupportedOperationException("Not yet implemented");
+        manager.notify(100, notification);
     }
 }
