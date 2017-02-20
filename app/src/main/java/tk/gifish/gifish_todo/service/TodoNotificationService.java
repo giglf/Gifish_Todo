@@ -18,8 +18,8 @@ import tk.gifish.gifish_todo.activity.ReminderActivity;
 
 public class TodoNotificationService extends IntentService {
 
-    public static final String TODOTEXT = "tk.gifish.gifish_todo.todonotificationservicetext";
-    public static final String TODOUUID = "tk.gifish.gifish_todo.todonotificationserviceuuid";
+    public static final String TODOTEXT = "tk.gifish.todonotificationservicetext";
+    public static final String TODOUUID = "tk.gifish.todonotificationserviceuuid";
 
     private String mTodoText;
     private UUID mTodoUUID;
