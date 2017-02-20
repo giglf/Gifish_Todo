@@ -5,4 +5,5 @@ package tk.gifish.gifish_todo.activity;
  */
 
 public class ReminderActivity {
+    public static final String EXIT = "tk.gifish.exit";
 }

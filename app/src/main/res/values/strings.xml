@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Gifish-Todo</string>
+    <string name="action_settings">Settings</string>
     <string name="no_to_dos">You don\'t have any todos</string>
     <string name="title">Title</string>
     <string name="remind_me">Remind Me</string>
     <string name="choose_date">Date</string>
     <string name="choose_time">Time</string>
     <string name="remind_date_and_time">Reminder set for %1$s, %2$s %3$s</string>
+    <string name="about">About</string>
 </resources>
