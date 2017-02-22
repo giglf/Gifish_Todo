@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //从文件获取主题偏好设置
         theme = getSharedPreferences(THEME_PREFERENCES, MODE_PRIVATE).getString(THEME_SAVED, LIGHTTHEME);
 
         if(theme.equals(LIGHTTHEME)){
@@ -145,17 +146,20 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean(CHANGE_OCCURED, false);
         editor.apply();
 
+        //从储存文件获取已添加的TODO项目
         storeRetrieveData = new StoreRetrieveData(this, FILENAME);
         toDoItemArrayList = getLocallyStoredData(storeRetrieveData);
         adapter = new BasicListAdapter(toDoItemArrayList);
         setAlarms();
 
+        //获取一系列控件
         final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         coordinatorLayout = (CoordinatorLayout)findViewById(R.id.myCoordinatorLayout);
         addToDoItemFAB = (FloatingActionButton)findViewById(R.id.addToDoItemFAB);
 
+        //浮动按钮点击事件，添加新的TODO
         addToDoItemFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //RecycleView设置
         recyclerView = (RecyclerViewEmptySupport)findViewById(R.id.toDoRecyclerView);
         if(theme.equals(LIGHTTHEME)){
             recyclerView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLightest));
@@ -199,6 +204,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+
+    /**
+     * 设置新的Alarms
+     */
     private void setAlarms(){
         if(toDoItemArrayList != null){
             for(ToDoItem item : toDoItemArrayList){
@@ -245,6 +254,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * AddToDoActivity完成返回后调用，判断是否新增了TODO Item，并设置闹钟，添加到列表RecycleView中
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode != RESULT_CANCELED && requestCode == REQUEST_ID_TODO_ITEM){
@@ -432,7 +448,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         ToDoItem item = items.get(ViewHolder.this.getAdapterPosition());
-                        Intent i = new Intent(MainActivity.this, AddToDoActivity.class);  //AddToDoActivity need to be defined
+                        Intent i = new Intent(MainActivity.this, AddToDoActivity.class);
                         i.putExtra(TODOITEM, item);
                         startActivityForResult(i, REQUEST_ID_TODO_ITEM);
                     }
