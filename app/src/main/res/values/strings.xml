@@ -8,4 +8,6 @@
     <string name="choose_time">Time</string>
     <string name="remind_date_and_time">Reminder set for %1$s, %2$s %3$s</string>
     <string name="about">About</string>
+    <string name="date_error_check_again">The date you entered is in the past.</string>
+    <string name="date_reminder_default">Today</string>
 </resources>
