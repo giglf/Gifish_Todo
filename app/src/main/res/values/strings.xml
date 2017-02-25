@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="no_to_dos">You don\'t have any todos</string>
     <string name="title">Title</string>
+    <string name="done_label">Done</string>
     <string name="remind_me">Remind Me</string>
     <string name="choose_date">Date</string>
     <string name="choose_time">Time</string>
@@ -10,4 +11,13 @@
     <string name="about">About</string>
     <string name="date_error_check_again">The date you entered is in the past.</string>
     <string name="date_reminder_default">Today</string>
+
+    <string-array name="snooze_options">
+        <item>10 Minutes</item>
+        <item>30 Minutes</item>
+        <item>1 Hour</item>
+    </string-array>
+
+    <string name="snooze">Snooze</string>
+    <string name="remove">Remove</string>
 </resources>
