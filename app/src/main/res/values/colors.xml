@@ -14,5 +14,4 @@
 
     <color name="colorPrimaryLighter">#E1E4F4</color>
     <color name="colorPrimaryLightest">#F0F1F9</color>
-    <drawable name="abc_ic_ab_back_mtrl_am_alpha">@drawable/abc_ic_ab_back_material</drawable>
 </resources>
