@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -314,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
     private void createAlarm(Intent i, int requestCode, long timeInMillis){
         AlarmManager alarmManager = getAlarmManager();
         PendingIntent pendingIntent = PendingIntent.getService(this, requestCode, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
     }
 
     private void deleteAlarm(Intent i, int requestCode){
@@ -332,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addToDataStore(ToDoItem item){
         toDoItemArrayList.add(item);
-        adapter.notifyItemChanged(toDoItemArrayList.size() - 1);
+        adapter.notifyItemInserted(toDoItemArrayList.size()-1);
     }
 
     private void saveDate(){
@@ -423,13 +425,33 @@ public class MainActivity extends AppCompatActivity {
                     Collections.swap(items, i, i+1);
                 }
             }
+            notifyItemMoved(fromPosition, toPosition);
         }
 
         @Override
         public void onItemRemoved(int position) {
 
             justDeletedToDoItem = items.remove(position);
+            indexOfDeletedToDoItem = position;
             Intent i = new Intent(MainActivity.this, TodoNotificationService.class);
+            deleteAlarm(i, justDeletedToDoItem.getIdentifier().hashCode());
+            notifyItemRemoved(position);
+
+            String toShow = "Todo";
+            Snackbar.make(coordinatorLayout, "Deleted " + toShow, Snackbar.LENGTH_SHORT)
+                    .setAction("UNDO", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            items.add(indexOfDeletedToDoItem, justDeletedToDoItem);
+                            if (justDeletedToDoItem.getToDoDate()!=null && justDeletedToDoItem.hasReminder()){
+                                Intent intent = new Intent(MainActivity.this, TodoNotificationService.class);
+                                intent.putExtra(TodoNotificationService.TODOTEXT, justDeletedToDoItem.getToDoText());
+                                intent.putExtra(TodoNotificationService.TODOUUID, justDeletedToDoItem.getIdentifier());
+                                createAlarm(intent, justDeletedToDoItem.getIdentifier().hashCode(), justDeletedToDoItem.getToDoDate().getTime());
+                            }
+                            notifyItemInserted(indexOfDeletedToDoItem);
+                        }
+                    }).show();
 
         }
 
@@ -454,7 +476,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 toDoTextView = (TextView)v.findViewById(R.id.toDoListItemTextView);
-                timeTextView = (TextView)v.findViewById(R.id.todoListItemTimeTextView);
+                timeTextView = (TextView)v.findViewById(R.id.toDoListItemTimeTextView);
                 colorImageView = (ImageView)v.findViewById(R.id.toDoListItemColorImageView);
                 linearLayout = (LinearLayout)v.findViewById(R.id.listItemLinearLayout);
 
