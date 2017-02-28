@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/toDoListItemColorImageView"
@@ -37,7 +37,7 @@
 
         <TextView
             android:id="@+id/toDoListItemTimeTextView"
-            android:text="27 Sept 2015, 22:30"
+            android:text="28 Feb 2017, 22:30"
             android:textColor="?attr/colorAccent"
             android:layout_below="@id/toDoListItemTextView"
             android:gravity="start|center"
